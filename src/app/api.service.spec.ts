@@ -1,28 +1,21 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { IPosts } from './posts';
 
-describe('AppComponent', () => {
-
+describe('ApiService', () => {
   let service: ApiService;
   let http: HttpClient;
   let httpCtrl: HttpTestingController;
-  beforeEach(async(() => {
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-      providers: [ApiService]
-    }).compileComponents();
-  }));
+      imports: [HttpClientTestingModule],
+providers: [ApiService]
+    });
+    
+  });
 
   beforeEach(() => {
     service = TestBed.inject(ApiService);
@@ -54,10 +47,7 @@ describe('AppComponent', () => {
     expect(req.request.responseType).toEqual('json');
     req.flush(testData);
   });
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
-
 });

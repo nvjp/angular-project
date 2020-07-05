@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Form Validation</h2>
+    <form [formGroup]="userForm">
+        <div class="form-group">
+            <label for="uname">Username:</label>
+            <input type="text" formControlName="uname" class="form-control" [ngClass]="{'border-error':errormsgs.uname}"
+                id="uname" (blur)="validateMsgs()" placeholder="Enter username" name="uname">
+            <div class="has-error" *ngIf="errormsgs.uname">{{errormsgs.uname}}</div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" formControlName="email" [ngClass]="{'border-error':errormsgs.email}"
+                class="form-control" id="email" (blur)="validateMsgs()" placeholder="Enter email" name="email">
+            <div class="has-error" *ngIf="errormsgs.email">{{errormsgs.email}}</div>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Preference:</label><br>
+            <label class="radio-inline"><input class="radio-inline" (click)="contactPreference('phone')" (blur)="validateMsgs()" formControlName="contact"
+                    type="radio" value="phone">Phone </label>
+            <label class="radio-inline"><input class="radio-inline" (click)="contactPreference('email')" (blur)="validateMsgs()" formControlName="contact"
+                    type="radio" value="email">Email </label>
+            <div class="has-error" *ngIf="errormsgs.contact">{{errormsgs.contact}}</div>
+        </div>
+        <div class="form-group">
+            <label for="email1">Email:</label>
+            <input type="email" formControlName="email1" [ngClass]="{'border-error':errormsgs.email1}"
+                class="form-control" id="email1" (blur)="validateMsgs()" placeholder="Enter email1" name="email1">
+            <div class="has-error" *ngIf="errormsgs.email1">{{errormsgs.email1}}</div>
+        </div>
+        <div class="form-group" >
+            <label for="phone">Phone:</label>
+            <input type="text" formControlName="phone" [ngClass]="{'border-error':errormsgs.phone}" class="form-control"
+                id="phone" (blur)="validateMsgs()" placeholder="Enter phone" name="phone">
+            <div class="has-error" *ngIf="errormsgs.phone">{{errormsgs.phone}}</div>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" [ngClass]="{'border-error':errormsgs.remember}"
+                    formControlName="remember" type="checkbox" (blur)="validateMsgs()" name="remember"> I agree on
+                blabla.
+                <div class="has-error" *ngIf="errormsgs.remember">{{errormsgs.remember}}</div>
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

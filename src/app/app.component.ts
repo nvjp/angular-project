@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from './api.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { ApiService } from './api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
 
   constructor(private apiService: ApiService) {
   }
@@ -18,4 +20,5 @@ export class AppComponent implements OnInit {
   private getPosts() {
     this.apiService.getPosts().subscribe(res => console.log(res));
   }
+
 }

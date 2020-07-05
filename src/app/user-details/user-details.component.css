@@ -1,0 +1,6 @@
+.has-error {
+    color: red !important;
+}
+.border-error {
+    border: 1px solid red;
+}

@@ -48,12 +48,12 @@
             <div formArrayName="skill" *ngFor="let ii of dataControls;let i = index">
                 <div class="form-group" [formGroupName]="i">
                     <label [attr.for]="'skill'+i">Skill:</label>
-                    <input type="text" formControlName="skill" [ngClass]="{'border-error':errormsgs.skill}"
+                    <input type="text" formControlName="skill" [ngClass]="{'border-error':ii.get('skill').errors.required && ii.get('skill').touched}"
                         class="form-control" [id]="'skill'+i" placeholder="Enter skill" name="skill">
                     <div class="has-error" *ngIf="ii.get('skill').errors.required && ii.get('skill').touched">Skill
                         required</div>
                     <label [attr.for]="'exp'+i">Exp:</label>
-                    <input type="text" formControlName="exp" [ngClass]="{'border-error':errormsgs.exp}"
+                    <input type="text" formControlName="exp" [ngClass]="{'border-error':ii.get('exp').errors.required && ii.get('exp').touched}"
                         class="form-control" [id]="'exp'+i" placeholder="Enter exp" name="exp">
                     <div class="has-error" *ngIf="ii.get('exp').errors.required && ii.get('exp').touched">exp required
                     </div>

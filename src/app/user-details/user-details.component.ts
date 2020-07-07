@@ -27,12 +27,6 @@ export class UserDetailsComponent implements OnInit {
     },
     email1: {
       required: 'Email1 is required field'
-    },
-    skill: {
-      required: 'skill is required field'
-    },
-    exp: {
-      required: 'exp is required field'
     }
   };
   errormsgs = {
@@ -41,9 +35,7 @@ export class UserDetailsComponent implements OnInit {
     remember: '',
     contact: '',
     email1: '',
-    phone: '',
-    skill: '',
-    exp: ''
+    phone: ''
   };
   contactPref = '';
   dataControls = [];
@@ -80,15 +72,16 @@ export class UserDetailsComponent implements OnInit {
     Object.keys(group.controls).forEach((key) => {
       const control1 = group.get(key)
       this.errormsgs[key] = '';
-      if (control1 instanceof FormArray) {
-        for (const iterator1 of control1.controls) {
-         if (iterator1 instanceof FormGroup) {
-          this.validateMsgs(iterator1);
-         }
-        }
-      } else {
-        this.iter(control1, key)
-      }
+      this.iter(control1, key)
+      // if (control1 instanceof FormArray) {
+      //   for (const iterator1 of control1.controls) {
+      //    if (iterator1 instanceof FormGroup) {
+      //     this.validateMsgs(iterator1);
+      //    }
+      //   }
+      // } else {
+        
+      // }
 
     })
   }

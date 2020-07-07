@@ -46,6 +46,7 @@ export class UserDetailsComponent implements OnInit {
     exp: ''
   };
   contactPref = '';
+  dataControls = [];
 
   constructor(private fb: FormBuilder) { }
 
@@ -61,7 +62,9 @@ export class UserDetailsComponent implements OnInit {
         this.addFormGroup()
       ])
     })
+    this.dataControls = (<FormArray>this.userForm.get('skill')).controls;
     this.userForm.valueChanges.subscribe((d) => {
+      this.dataControls = (<FormArray>this.userForm.get('skill')).controls;
       this.validateMsgs()
     })
   }
@@ -79,13 +82,11 @@ export class UserDetailsComponent implements OnInit {
       this.errormsgs[key] = '';
       if (control1 instanceof FormArray) {
         for (const iterator1 of control1.controls) {
-          console.log(iterator1)
          if (iterator1 instanceof FormGroup) {
           this.validateMsgs(iterator1);
          }
         }
       } else {
-        console.log(control1)
         this.iter(control1, key)
       }
 
@@ -94,10 +95,13 @@ export class UserDetailsComponent implements OnInit {
   iter(control, key) {
     if (control.touched && control.errors) {
       for (const key1 in control.errors) {
-        console.log(key)
         this.errormsgs[key] = this.validationMsgs[key][key1];
       }
     }
+  }
+
+  addDynFormGroup() {
+    (<FormArray>this.userForm.get('skill')).push(this.addFormGroup());
   }
 
   contactPreference(contact) {

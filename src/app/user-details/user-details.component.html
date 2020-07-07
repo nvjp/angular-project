@@ -41,18 +41,26 @@
                 <div class="has-error" *ngIf="errormsgs.remember">{{errormsgs.remember}}</div>
             </label>
         </div>
-        <div formArrayName="skill">
-            <div class="form-group" formGroupName="0">
-                <label for="skill">Skill:</label>
-                <input type="text" formControlName="skill" [ngClass]="{'border-error':errormsgs.skill}"
-                    class="form-control" id="skill" (blur)="validateMsgs()" placeholder="Enter skill" name="skill">
-                <div class="has-error" *ngIf="errormsgs.skill">{{errormsgs.skill}}</div>
-                <label for="exp">Exp:</label>
-                <input type="text" formControlName="exp" [ngClass]="{'border-error':errormsgs.exp}" class="form-control"
-                    id="exp" (blur)="validateMsgs()" placeholder="Enter exp" name="exp">
-                <div class="has-error" *ngIf="errormsgs.exp">{{errormsgs.exp}}</div>
+        <div>
+            <button (click)="addDynFormGroup()" class="btn btn-danger">Add</button>
+        </div>
+        <div *ngIf="dataControls.length > 0">
+            <div formArrayName="skill" *ngFor="let ii of dataControls;let i = index">
+                <div class="form-group" [formGroupName]="i">
+                    <label [attr.for]="'skill'+i">Skill:</label>
+                    <input type="text" formControlName="skill" [ngClass]="{'border-error':errormsgs.skill}"
+                        class="form-control" [id]="'skill'+i" placeholder="Enter skill" name="skill">
+                    <div class="has-error" *ngIf="ii.get('skill').errors.required && ii.get('skill').touched">Skill
+                        required</div>
+                    <label [attr.for]="'exp'+i">Exp:</label>
+                    <input type="text" formControlName="exp" [ngClass]="{'border-error':errormsgs.exp}"
+                        class="form-control" [id]="'exp'+i" placeholder="Enter exp" name="exp">
+                    <div class="has-error" *ngIf="ii.get('exp').errors.required && ii.get('exp').touched">exp required
+                    </div>
+                </div>
             </div>
         </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

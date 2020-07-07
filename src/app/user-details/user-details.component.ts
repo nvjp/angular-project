@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -27,6 +27,12 @@ export class UserDetailsComponent implements OnInit {
     },
     email1: {
       required: 'Email1 is required field'
+    },
+    skill: {
+      required: 'skill is required field'
+    },
+    exp: {
+      required: 'exp is required field'
     }
   };
   errormsgs = {
@@ -35,7 +41,9 @@ export class UserDetailsComponent implements OnInit {
     remember: '',
     contact: '',
     email1: '',
-    phone: ''
+    phone: '',
+    skill: '',
+    exp: ''
   };
   contactPref = '';
 
@@ -49,22 +57,47 @@ export class UserDetailsComponent implements OnInit {
       contact: ['', Validators.required],
       email1: [''],
       phone: [''],
+      skill: this.fb.array([
+        this.addFormGroup()
+      ])
     })
     this.userForm.valueChanges.subscribe((d) => {
       this.validateMsgs()
     })
-  } n
+  }
 
-  validateMsgs() {
-    Object.keys(this.userForm.controls).forEach((key) => {
-      const control = this.userForm.get(key)
-      this.errormsgs[key] = '';
-      if (control.touched && control.errors) {
-        for (const key1 in control.errors) {
-          this.errormsgs[key] = this.validationMsgs[key][key1];
-        }
-      }
+  addFormGroup(): FormGroup {
+    return this.fb.group({
+      skill: ['', Validators.required],
+      exp: ['', Validators.required]
     })
+  }
+
+  validateMsgs(group:FormGroup = this.userForm) {
+    Object.keys(group.controls).forEach((key) => {
+      const control1 = group.get(key)
+      this.errormsgs[key] = '';
+      if (control1 instanceof FormArray) {
+        for (const iterator1 of control1.controls) {
+          console.log(iterator1)
+         if (iterator1 instanceof FormGroup) {
+          this.validateMsgs(iterator1);
+         }
+        }
+      } else {
+        console.log(control1)
+        this.iter(control1, key)
+      }
+
+    })
+  }
+  iter(control, key) {
+    if (control.touched && control.errors) {
+      for (const key1 in control.errors) {
+        console.log(key)
+        this.errormsgs[key] = this.validationMsgs[key][key1];
+      }
+    }
   }
 
   contactPreference(contact) {
